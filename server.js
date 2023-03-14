@@ -4,7 +4,7 @@ const path = require('path');
 const hbs = exphbs.create({});
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-// const routes = require('./controllers');
+const routes = require('./controllers/routes');
 const sequelize = require('./config/connection');
 
 // Sets up the Express App
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(routes);
+app.use(routes);
 
 // Starts the server to begin listening
 // sequelize.sync({ force: false }).then(() => {
