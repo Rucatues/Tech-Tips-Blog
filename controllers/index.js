@@ -3,7 +3,7 @@ const router = require('express').Router();
 const homeRoutes = require('./home-routes.js');
 
 router.use('/', homeRoutes);
+router.use('/api', apiRoutes);
+router.use('/dashboard', dashboardRoutes)
 
 module.exports = router;
-
-//will need to add const and router.use for api routes?

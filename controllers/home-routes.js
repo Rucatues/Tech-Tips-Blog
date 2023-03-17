@@ -4,30 +4,30 @@ const Auth = require('../utils/auth');
 
 //Get all blogs for homepage
 
-// router.get('/', async (req, res) => {
-//     try {
-//         const allBlogs = await Blog.findAll({
-//             include: [
-//                 {
-//                     model: User,
-//                     attributes: ['username']
-//                 }
-//             ]
-//         });
+router.get('/', async (req, res) => {
+    try {
+        const allBlogs = await Blog.findAll({
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            ]
+        });
 
-//         const blogs = allBlogs.map((blog) =>
-//             blog.get({ plain: true })
-//         );
+        const blogs = allBlogs.map((blog) =>
+            blog.get({ plain: true })
+        );
 
-//         res.render('main', {
-//             blogs
-//         });
+        res.render('homepage', {
+            blogs
+        });
 
-//     } catch (err) {
-//         console.log(err);
-//         res.status(500).json(err);
-//     }
-// });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
 
 // router.get('/:userid', Auth, async (req, res) => {
 //     try {
