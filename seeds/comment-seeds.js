@@ -1,4 +1,4 @@
-const { Comment } = require('../models/comment');
+const { Comment } = require('../models');
 
 const CommentData = [
     {
@@ -21,4 +21,6 @@ const CommentData = [
 
 const seedComments = () => Comment.bulkCreate(CommentData);
 
-module.exports = seedComments; 
+module.exports = seedComments;
+
+// module.exports = CommentData; 
