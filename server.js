@@ -27,9 +27,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(routes);
 
-// const sess = {
-//     see activity 18
-// };
+const sess = {
+    secret: process.env.COOKIE,
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+        db: sequelize
+    })
+};
+
+app.use(session(sess));
 
 // Starts the server to begin listening
 sequelize.sync({ force: false }).then(() => {
