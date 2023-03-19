@@ -10,7 +10,7 @@ const sequelize = require('./config/connection');
 
 // Sets up the Express App
 const app = express();
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 3001;
 
 // Import the custom helper methods
 const helpers = require('./utils/helpers');

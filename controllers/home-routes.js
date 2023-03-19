@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
             blog.get({ plain: true })
         );
 
-        res.render('homepage', {
+        res.render('layouts/main', {
             blogs
         });
 
