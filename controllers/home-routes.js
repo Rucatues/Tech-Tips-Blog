@@ -36,10 +36,22 @@ router.get('/login', async (req, res) => {
     }
 });
 
+//takes user to login page
+router.get('/dashboard', Auth, async (req, res) => {
+    try {
+        res.render("dashboard", {
+            username: "test"
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
 //takes user to sign up page
 router.get('/signup', async (req, res) => {
     try {
-        res.send("It worked!")
+
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -49,7 +61,7 @@ router.get('/signup', async (req, res) => {
 //takes user to blog if they click on a certain blogpost
 router.get('/:blogid', async (req, res) => {
     try {
-        res.send("It worked!")
+
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
