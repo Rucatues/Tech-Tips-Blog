@@ -1,13 +1,10 @@
-body {
-    color: red; 
+
+#page-title {
+    font-size: 30px; 
 }
-
-
 .padding {
     padding: 20px; 
-}
-.blogs {
-    font-size: smaller; 
-    padding: 10px; 
-}
+};
+
+
 
