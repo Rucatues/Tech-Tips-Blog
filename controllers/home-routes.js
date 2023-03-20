@@ -17,7 +17,8 @@ router.get('/', async (req, res) => {
         );
 
         res.render('homepage', {
-            blogs
+            blogs,
+            logged_in: req.session.logged_in
         });
 
     } catch (err) {
@@ -26,21 +27,54 @@ router.get('/', async (req, res) => {
     }
 });
 
+// router.get('/blog/:id', async (req, res) => {
+//     try {
+//         const singleBlogData = await Blog.findByPk(req.params.id, {
+//             include: [
+//                 {
+//                     model: User,
+//                     attributes: ["id", "username"]
+//                 }
+//             ]
+//         });
+
+//         const singleBlog = singleBlogData.get({ plain: true });
+
+//         res.render('singleblog', {
+//             ...singleBlog,
+//             logged_in: req.session.logged_in
+//         })
+//     } catch {
+//         console.log(err);
+//         res.status(500).json(err);
+//     }
+// });
+
 //takes user to login page
-router.get('/login', async (req, res) => {
-    try {
-        res.render("login")
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+router.get('/login', (req, res) => {
+    // If the user is already logged in, redirect the request to another route
+    if (req.session.logged_in) {
+        res.redirect('/dashboard');
+        return;
     }
+
+    res.render('login');
 });
 
 //takes user to dashboard page
 router.get('/dashboard', Auth, async (req, res) => {
     try {
+
+        const userData = await User.findByPk(req.session.user_id, {
+            attributes: { exclude: ['password'] },
+            include: [{ model: Blog }],
+        });
+
+        const user = userData.get({ plain: true });
+
         res.render("dashboard", {
-            username: "test"
+            ...user,
+            logged_in: true
         })
     } catch (err) {
         console.log(err);
