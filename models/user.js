@@ -1,28 +1,32 @@
 const { Model, DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
+const sequelize = require('../config/connection');
 
-const sequelize = require('../config/connection.js');
-
-class User extends Model { }
+class User extends Model {
+    checkPassword(loginPw) {
+        return bcrypt.compareSync(loginPw, this.password);
+    }
+}
 
 User.init(
     {
-        // columns defined
         id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
-
         username: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
+            validate: {
+                isEmail: true,
+            },
         },
         password: {
             type: DataTypes.STRING,
@@ -30,26 +34,25 @@ User.init(
             validate: {
                 len: [10],
             },
-        }
-    }, {
-    hooks: {
-        // Use the beforeCreate hook to work with data before a new instance is created
-        beforeCreate: async (newUserData) => {
-            // taking the user's email address, and making all letters lower case before adding it to the database.
-            newUserData.email = await newUserData.email.toLowerCase();
-            return newUserData;
-        },
-        // make all of the characters lower case in an updated email address, before updating the database.
-        beforeUpdate: async (updatedUserData) => {
-            updatedUserData.email = await updatedUserData.email.toLowerCase();
-            return updatedUserData;
         },
     },
-    sequelize,
-    timestamps: false,
-    freezeTableName: true, //uses singular table name instead of changing it to "Categorys"
-    underscored: true, //sets field option on all attributes to snacke_case version of its name
-    modelName: 'user'
-});
+    {
+        hooks: {
+            beforeCreate: async (newUserData) => {
+                newUserData.password = await bcrypt.hash(newUserData.password, 10);
+                return newUserData;
+            },
+            beforeUpdate: async (updatedUserData) => {
+                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+                return updatedUserData;
+            },
+        },
+        sequelize,
+        timestamps: false,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'user',
+    }
+);
 
 module.exports = User;

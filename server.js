@@ -5,7 +5,7 @@ const session = require('express-session');
 
 //initializes Sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const routes = require('./controllers/home-routes');
+const routes = require('./controllers');
 const sequelize = require('./config/connection');
 
 // Sets up the Express App
@@ -16,16 +16,6 @@ const PORT = process.env.PORT || 3001;
 const helpers = require('./utils/helpers');
 const hbs = exphbs.create({ helpers });
 
-// Set Handlebars as the default template engine.
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-
-//express middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(routes);
 
 const sess = {
     secret: process.env.COOKIE,
@@ -38,6 +28,17 @@ const sess = {
 };
 
 app.use(session(sess));
+
+// Set Handlebars as the default template engine.
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
+//express middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(routes);
 
 // Starts the server to begin listening
 sequelize.sync({ force: false }).then(() => {

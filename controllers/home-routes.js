@@ -6,19 +6,17 @@ const Auth = require('../utils/auth');
 router.get('/', async (req, res) => {
     try {
         const allBlogs = await Blog.findAll({
-            include: [
-                {
-                    model: User,
-                    attributes: ['username']
-                }
-            ]
+            include: {
+                model: User,
+                attributes: ["id", "username", "email"]
+            }
         });
 
         const blogs = allBlogs.map((blog) =>
             blog.get({ plain: true })
         );
 
-        res.render('layouts/main', {
+        res.render('homepage', {
             blogs
         });
 
@@ -31,7 +29,19 @@ router.get('/', async (req, res) => {
 //takes user to login page
 router.get('/login', async (req, res) => {
     try {
-        res.send("It worked!")
+        res.render("login")
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
+//takes user to login page
+router.get('/dashboard', Auth, async (req, res) => {
+    try {
+        res.render("dashboard", {
+            username: "test"
+        })
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -61,7 +71,7 @@ router.get('/:blogid', async (req, res) => {
 //takes user to form to create new comment for that specific blog post
 router.get('/:blogid/newcomment', (req, res) => {
     try {
-        // res.render('partials/commentcard');
+        console.log(req.body);
     } catch (err) {
         res.sendStatus(500).send(err);
         console.log(err);
