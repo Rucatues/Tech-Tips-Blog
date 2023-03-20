@@ -36,7 +36,7 @@ router.get('/login', async (req, res) => {
     }
 });
 
-//takes user to login page
+//takes user to dashboard page
 router.get('/dashboard', Auth, async (req, res) => {
     try {
         res.render("dashboard", {
