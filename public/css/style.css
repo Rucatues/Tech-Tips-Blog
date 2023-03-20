@@ -1,4 +1,8 @@
 
+body {
+    background-color: rgb(209, 212, 225) !important; 
+}; 
+
 #page-title {
     font-size: 30px; 
 }
