@@ -22,9 +22,8 @@ router.post('/', async (req, res) => {
         req.session.save(() => {
             req.session.user_id = userData.id;
             req.session.logged_in = true;
-
-            res.status(200).json(userData);
         })
+        res.status(200).json(userData);
     } catch (err) {
         console.log(err);
         res.status(500).send(err);
@@ -63,14 +62,11 @@ router.post('/login', async (req, res) => {
     }
 });
 
-
-
-router.delete('/', async (req, res) => {
-    try {
-
-    } catch (err) {
-        res.sendStatus(500).send(err);
-        console.log(err);
+router.post('/logout', async (req, res) => {
+    if (req.session.logged_in) {
+        req.session.destroy(() => {
+            res.status(204).end()
+        })
     }
 });
 
