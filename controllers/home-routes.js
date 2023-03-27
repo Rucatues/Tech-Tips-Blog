@@ -27,29 +27,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// router.get('/blog/:id', async (req, res) => {
-//     try {
-//         const singleBlogData = await Blog.findByPk(req.params.id, {
-//             include: [
-//                 {
-//                     model: User,
-//                     attributes: ["id", "username"]
-//                 }
-//             ]
-//         });
-
-//         const singleBlog = singleBlogData.get({ plain: true });
-
-//         res.render('singleblog', {
-//             ...singleBlog,
-//             logged_in: req.session.logged_in
-//         })
-//     } catch {
-//         console.log(err);
-//         res.status(500).json(err);
-//     }
-// });
-
 //takes user to login page
 router.get('/login', (req, res) => {
     // If the user is already logged in, redirect the request to another route

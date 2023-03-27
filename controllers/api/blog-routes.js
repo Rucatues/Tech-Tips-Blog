@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { Blog, User, Comment } = require('../../models');
-// const Auth = require('../utils/auth');
 
 // api/blog routes
 
