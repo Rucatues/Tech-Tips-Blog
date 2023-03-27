@@ -18,7 +18,7 @@
 
 ## Link  
 
-[Click here](linkhere) to view application deployed on Heroku.   
+[Click here](https://techtipsblog.herokuapp.com/) to view application deployed on Heroku.   
 
 ## Description  
 
@@ -26,11 +26,7 @@ This is a CMS-Style blog where developers can publish their blog posts and comme
 
 ## Screenshot  
 
-
-
-## Video Walkthrough
-
-[Click here](linkhere) to view a video walkthrough of this application. 
+![Screenshot](./public/images/Screenshot.png)
 
 
 ## Installation
