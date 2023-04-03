@@ -50,31 +50,31 @@ router.get('/signup', async (req, res) => {
 });
 
 //takes user to dashboard page
-router.get('/dashboard', Auth, async (req, res) => {
-    try {
+// router.get('/dashboard', Auth, async (req, res) => {
+//     try {
 
-        const userData = await User.findByPk(req.session.user_id, {
-            attributes: { exclude: ['password'] },
-            include: [{ model: Blog }],
-        });
+//         const userData = await User.findByPk(req.session.user_id, {
+//             attributes: { exclude: ['password'] },
+//             include: [{ model: Blog }],
+//         });
 
-        const user = userData.get({ plain: true });
+//         const user = userData.get({ plain: true });
 
-        res.render("dashboard", {
-            ...user,
-            logged_in: true
-        })
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
-});
+//         res.render("dashboard", {
+//             ...user,
+//             logged_in: true
+//         })
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json(err);
+//     }
+// });
 
 
 //takes user to blog if they click on a certain blogpost
-router.get('/:blogid', async (req, res) => {
+router.get('/newpost', async (req, res) => {
     try {
-
+        res.render('newpost');
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -92,19 +92,19 @@ router.get('/:blogid/newcomment', (req, res) => {
 });
 
 //takes user to dashboard for specific userid
-router.get('/dashboard', Auth, async (req, res) => {
+router.get('/dashboard', async (req, res) => {
     try {
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
-});
-
-//takes user to from dashboard to page to create a new blog post
-router.get('/dashboard/new', Auth, async (req, res) => {
-    try {
-
+        console.log(req.session);
+        const blogData = await Blog.findAll({
+            where: {
+                user_id: req.session.user_id
+            }
+        })
+        const blogs = blogData.map((blog) =>
+            blog.get({ plain: true })
+        );
+        console.log(blogs);
+        res.render('dashboard', { blogs });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
