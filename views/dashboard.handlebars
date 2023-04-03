@@ -1,7 +1,15 @@
 <div>
-    <h1>You are logged in!</h1>
-    <p>Greetings, {{username}}</p>
+    <p class="padding">Welcome to your dashboard, here are your recent submissions:</p>
     {{#each blogs}}
-    <p>{{title}}</p>
+    <div class="padding">
+        <div class="card">
+            <div class="card-header" id="card-header">
+                {{title}}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title" id="card-description">{{description}}</h5>
+            </div>
+        </div>
+    </div>
     {{/each}}
 </div>
